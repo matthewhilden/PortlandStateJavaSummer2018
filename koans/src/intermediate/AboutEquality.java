@@ -42,7 +42,8 @@ public class AboutEquality {
             // Change this implementation to match the equals contract
             // Car objects with same horsepower and name values should be considered equal
             // http://download.oracle.com/javase/6/docs/api/java/lang/Object.html#equals(java.lang.Object)
-            if (this.name.equals(other.name) && this.horsepower == other.horsepower)
+            Car car = (Car) other;
+            if (this.name.equals(car.name) && this.horsepower == car.horsepower)
             {
                 return true;
             }
