@@ -18,4 +18,10 @@ public class Project1
         System.exit(1);
     }
 
+    // Static function to parse Command Line input
+    static void parseCommandLine(String[] args)
+    {
+
+    }
+
 }
