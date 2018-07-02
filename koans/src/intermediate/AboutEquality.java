@@ -42,18 +42,34 @@ public class AboutEquality {
             // Change this implementation to match the equals contract
             // Car objects with same horsepower and name values should be considered equal
             // http://download.oracle.com/javase/6/docs/api/java/lang/Object.html#equals(java.lang.Object)
-            Car car = (Car) other;
-            if (this.name.equals(car.name) && this.horsepower == car.horsepower)
+
+            if (other == this)
             {
                 return true;
             }
-            return false;
+            if (!(other instanceof Car))
+            {
+                return false;
+            }
+            Car car = (Car) other;
+            if (car.name.equals(this.name) && car.horsepower == this.horsepower)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         @Override
         public int hashCode() {
             // @see http://download.oracle.com/javase/6/docs/api/java/lang/Object.html#hashCode()
-            return super.hashCode();
+            int result = 17;
+            result = 31 * result + name.hashCode();
+            result = 31 * result + horsepower;
+
+            return result;
         }
     }
 
@@ -108,7 +124,9 @@ public class AboutEquality {
 
         @Override
         public int hashCode() {
-            return 4000;
+            int result = 17;
+            result = 31 * result + color.hashCode();
+            return result;
         }
 
         @Override
@@ -124,8 +142,8 @@ public class AboutEquality {
         Chicken chicken1 = new Chicken();
         chicken1.color = "black";
         Chicken chicken2 = new Chicken();
-        assertEquals(chicken1.equals(chicken2), __);
-        assertEquals(chicken1.hashCode() == chicken2.hashCode(), __);
+        assertEquals(chicken1.equals(chicken2), false);
+        assertEquals(chicken1.hashCode() == chicken2.hashCode(), false);
         // Does this still fit the hashCode contract? Why (not)?
         // Fix the Chicken class to correct this.
     }
