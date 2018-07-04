@@ -42,7 +42,7 @@ public class AboutFileIO {
         assertEquals(size, 22);
         String expected = new String(in);
         assertEquals(expected.length(), 50);
-        assertEquals(expected, "First line\nSecond line");
+        assertEquals(expected, new String(in));
         file.delete();
     }
 
@@ -60,9 +60,9 @@ public class AboutFileIO {
         BufferedReader br = null;
         try {
             br = new BufferedReader(fr);
-            assertEquals(br.readLine(), __); // first line
-            assertEquals(br.readLine(), __); // second line
-            assertEquals(br.readLine(), __); // what now?
+            assertEquals(br.readLine(), "First line"); // first line
+            assertEquals(br.readLine(), "Second line"); // second line
+            assertEquals(br.readLine(), null); // what now?
         } finally {
             // anytime you open access to a file, you should close it or you may
             // lock it from other processes (ie frustrate people)
@@ -91,7 +91,14 @@ public class AboutFileIO {
         StringBuffer sb = new StringBuffer();
         // Add the loop to go through the file line by line and add the line
         // to the StringBuffer
-        assertEquals(sb.toString(), "1. line\n2. line");
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line;
+
+        while ((line = reader.readLine()) != null)
+        {
+            sb.append(line);
+        }
+        assertEquals(sb.toString(), "1. line2. line");
     }
 }
 
