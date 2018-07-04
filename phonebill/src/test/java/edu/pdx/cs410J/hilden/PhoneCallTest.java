@@ -11,22 +11,22 @@ package edu.pdx.cs410J.hilden;
 public class PhoneCallTest
 {
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void getStartTimeStringNeedsToBeImplemented()
+    @Test
+    public void getStartTimeStringImplemented()
     {
-        PhoneCall call = new PhoneCall();
-        call.getStartTimeString();
+        PhoneCall call = new PhoneCall("Doesn't Matter", "Doesn't Matter", "StartTime", "Doesn't Matter");
+        assertThat(call.getStartTimeString(), containsString("StartTime"));
     }
 
     @Test
-    public void initiallyAllPhoneCallsHaveTheSameCallee()
+    public void getCalleeImplemented()
     {
-        PhoneCall call = new PhoneCall();
-        assertThat(call.getCallee(), containsString("not implemented"));
+        PhoneCall call = new PhoneCall("Doesn't Matter", "Callee", "Doesn't Matter", "Doesn't Matter");
+        assertThat(call.getCallee(), containsString("Callee"));
     }
 
     @Test
-    public void forProject1ItIsOkayIfGetStartTimeReturnsNull()
+    public void getStartTimeImplemented()
     {
         PhoneCall call = new PhoneCall();
         assertThat(call.getStartTime(), is(nullValue()));
