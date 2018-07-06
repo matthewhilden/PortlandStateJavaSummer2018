@@ -12,10 +12,10 @@ public class PhoneCallTest
 {
 
     @Test
-    public void getStartTimeStringImplemented()
+    public void getCallerImplemented()
     {
-        PhoneCall call = new PhoneCall("Doesn't Matter", "Doesn't Matter", "StartTime", "Doesn't Matter");
-        assertThat(call.getStartTimeString(), containsString("StartTime"));
+        PhoneCall call = new PhoneCall("Caller", "Doesn't Matter", "Doesn't Matter", "Doesn't Matter");
+        assertThat(call.getCaller(), containsString("Caller"));
     }
 
     @Test
@@ -26,10 +26,16 @@ public class PhoneCallTest
     }
 
     @Test
-    public void getStartTimeImplemented()
+    public void getStartTimeStringImplemented()
     {
-        PhoneCall call = new PhoneCall();
-        assertThat(call.getStartTime(), is(nullValue()));
+        PhoneCall call = new PhoneCall("Doesn't Matter", "Doesn't Matter", "StartTime", "Doesn't Matter");
+        assertThat(call.getStartTimeString(), containsString("StartTime"));
     }
 
+    @Test
+    public void getEndTimeStringImplemented()
+    {
+        PhoneCall call = new PhoneCall("Doesn't Matter", "Doesn't Matter", "Doesn't Matter", "EndTime");
+        assertThat(call.getEndTimeString(), containsString("EndTime"));
+    }
 }

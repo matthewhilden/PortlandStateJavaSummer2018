@@ -5,7 +5,7 @@ import edu.pdx.cs410J.AbstractPhoneCall;
 
 import java.util.Collection;
 
-public class PhoneBill extends AbstractPhoneBill
+public class PhoneBill extends AbstractPhoneBill<PhoneCall>
 {
 
     private String customerName;
@@ -40,10 +40,11 @@ public class PhoneBill extends AbstractPhoneBill
     }
 
     @Override
-    public void addPhoneCall(AbstractPhoneCall abstractPhoneCall)
+    public void addPhoneCall(PhoneCall phoneCall)
     {
-        phoneCalls.add((PhoneCall) abstractPhoneCall);
+        phoneCalls.add(phoneCall);
     }
+
 
     @Override
     public Collection getPhoneCalls()
