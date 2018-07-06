@@ -11,16 +11,30 @@ public class Project1
     public static void main(String[] args)
     {
         PhoneCall call = new PhoneCall();  // Refer to one of Dave's classes so that we can be sure it is on the classpath
-        System.err.println("Missing command line arguments");
-        for (String arg : args) {
-            System.out.println(arg);
+
+        int option = 0;
+        boolean print = false;
+        boolean readme = false;
+
+
+        for (String arg : args)
+        {
+
+            switch (arg)
+            {
+                case "-print"  : print = true;
+                                 break;
+                case "-README" : readme = true;
+                                 break;
+                default        :
+                                 break;
+
+            }
+
         }
+
+
+
         System.exit(1);
-    }
-
-    // Static function to parse Command Line input
-    static void parseCommandLine(String[] args)
-    {
-
     }
 }

@@ -1,15 +1,14 @@
 package edu.pdx.cs410J.hilden;
 
 import edu.pdx.cs410J.AbstractPhoneBill;
-import edu.pdx.cs410J.AbstractPhoneCall;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class PhoneBill extends AbstractPhoneBill<PhoneCall>
 {
-
     private String customerName;
-    private Collection<PhoneCall> phoneCalls;
+    private Collection<PhoneCall> phoneCalls = new ArrayList<>();
 
     // Default Constructor
     public PhoneBill()
@@ -25,14 +24,6 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>
         this.customerName = customerName;
     }
 
-    // Tertiary Constructor
-    // Takes input for a customer name and a collection of phone calls
-    public PhoneBill(String customerName, Collection<PhoneCall> phoneCalls)
-    {
-        this.customerName = customerName;
-        this.phoneCalls = phoneCalls;
-    }
-
     @Override
     public String getCustomer()
     {
@@ -45,9 +36,8 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>
         phoneCalls.add(phoneCall);
     }
 
-
     @Override
-    public Collection getPhoneCalls()
+    public Collection<PhoneCall> getPhoneCalls()
     {
         return phoneCalls;
     }
