@@ -11,15 +11,14 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>
     private Collection<PhoneCall> phoneCalls = new ArrayList<>();
 
     // Default Constructor
-    public PhoneBill()
+    PhoneBill()
     {
         this.customerName = null;
         this.phoneCalls = null;
     }
 
-    // Secondary Constructor
-    // Takes input for a customer name
-    public PhoneBill(String customerName)
+    // Set CustomerName
+    public void setCustomerName(String customerName)
     {
         this.customerName = customerName;
     }

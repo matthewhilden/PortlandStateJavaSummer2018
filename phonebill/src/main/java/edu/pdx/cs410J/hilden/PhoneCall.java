@@ -11,7 +11,7 @@ public class PhoneCall extends AbstractPhoneCall
 
     // Default Constructor
     // Initializes all data members to null
-    public PhoneCall()
+    PhoneCall()
     {
         this.callerNumber = null;
         this.calleeNumber = null;
@@ -21,11 +21,35 @@ public class PhoneCall extends AbstractPhoneCall
 
     // Secondary Constructor
     // Initializes all data members to input values
-    public PhoneCall(String callerNumber, String calleeNumber, String startTime, String endTime)
+    PhoneCall(String callerNumber, String calleeNumber, String startTime, String endTime)
     {
         this.callerNumber = callerNumber;
         this.calleeNumber = calleeNumber;
         this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    // Set Caller
+    public void setCallerNumber(String callerNumber)
+    {
+        this.callerNumber = callerNumber;
+    }
+
+    // Set Callee
+    public void setCalleeNumber(String calleeNumber)
+    {
+        this.calleeNumber = calleeNumber;
+    }
+
+    // Set StartTime
+    public void setStartTime(String startTime)
+    {
+        this.startTime = startTime;
+    }
+
+    // Set EndTime
+    public void setEndTime(String endTime)
+    {
         this.endTime = endTime;
     }
 
