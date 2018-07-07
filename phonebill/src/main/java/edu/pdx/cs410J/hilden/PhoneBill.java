@@ -25,7 +25,8 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>
 
     /**
      *  Sets the Customer Name field of the PhoneBill object
-     *  @param customerName
+     *  @param  customerName
+     *          The name of the customer for the specified PhoneBill
      */
     public void setCustomerName(String customerName)
     {
@@ -61,5 +62,13 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>
     public Collection<PhoneCall> getPhoneCalls()
     {
         return phoneCalls;
+    }
+
+    /**
+     *  Prints a ASCII text representation of the phone bill
+     */
+    public void printPhoneBill()
+    {
+
     }
 }

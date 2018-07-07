@@ -12,7 +12,6 @@ public class Project1
 
         int option = 0;                     // Keep track of what field we are currently parsing
         boolean print = false;              // Denotes -print
-        boolean readme = false;             // Denotes -README
 
         boolean multiWordCustomer = false;  // If the Customer name will use more than one argument
         String customerName = "";           // Storage for concatenation of multi word Customers
@@ -23,16 +22,16 @@ public class Project1
         {
             switch (option)
             {
-                case 0  : if (arg.equals("-print"))
-                          {
-                              print = true;
-                          }
-                          else if (arg.equals("-README"))
+                case 0  : if (arg.equals("-README"))            // Parse -README
                           {
                               printReadMe();
                               System.exit(0);
                           }
-                          else
+                          else if (arg.equals("-print"))        // Parse -print
+                          {
+                              print = true;
+                          }
+                          else                                  // Parse customerName
                           {
                               if (arg.charAt(0) == '"')
                               {
@@ -60,7 +59,7 @@ public class Project1
                           }
                           break;
 
-                case 1  : if (checkIfPhoneNumberIsValid(arg))
+                case 1  : if (checkIfPhoneNumberIsValid(arg))   // Parse callerNumber
                           {
                               call.setCallerNumber(arg);
                               option++;
@@ -71,7 +70,7 @@ public class Project1
                           }
                           break;
 
-                case 2  : if (checkIfPhoneNumberIsValid(arg))
+                case 2  : if (checkIfPhoneNumberIsValid(arg))   // Parse calleeNumber
                           {
                               call.setCalleeNumber(arg);
                               option++;
@@ -82,7 +81,7 @@ public class Project1
                           }
                           break;
 
-                case 3  : if (checkIfDateIsValid(arg))
+                case 3  : if (checkIfDateIsValid(arg))          // Parse startTime date portion
                           {
                               startTime += arg;
                               option++;
@@ -93,7 +92,7 @@ public class Project1
                           }
                           break;
 
-                case 4  : if (checkIfTimeIsValid(arg))
+                case 4  : if (checkIfTimeIsValid(arg))          // Parse startTime time portion
                           {
                               startTime += " " + arg;
                               call.setStartTime(startTime);
@@ -105,7 +104,7 @@ public class Project1
                           }
                           break;
 
-                case 5  : if (checkIfDateIsValid(arg))
+                case 5  : if (checkIfDateIsValid(arg))          // Parse endTime date portion
                           {
                               endTime += arg;
                               option++;
@@ -116,7 +115,7 @@ public class Project1
                           }
                           break;
 
-                case 6  : if (checkIfTimeIsValid(arg))
+                case 6  : if (checkIfTimeIsValid(arg))          // Parse endTime time portion
                           {
                               endTime += " " + arg;
                               call.setEndTime(endTime);
@@ -128,18 +127,18 @@ public class Project1
                           }
                           break;
 
-                default : System.exit(1);
+                default : System.exit(1);               // Default denotes error and exits
             }
         }
-        if (option != 6)
+        if (option != 7)                                       // Check for extraneous command line arguments
         {
             System.exit(1);
         }
         else
         {
-            if (print)
+            if (print)                                          // Print if required
             {
-
+                bill.printPhoneBill();
             }
         }
         System.exit(0);
@@ -151,10 +150,10 @@ public class Project1
      *          Phone number to be checked for validity
      *  @return Returns true if the input is a valid phone number, false otherwise
      */
-    public static boolean checkIfPhoneNumberIsValid(String number)
+    static boolean checkIfPhoneNumberIsValid(String number)
     {
         int length = number.length();
-        if (length != 12)               // Immediately check the correct length
+        if (length != 12)                                       // Immediately check the correct length
         {
             return false;
         }
@@ -162,14 +161,14 @@ public class Project1
         {
             for (int i = 0; i < length; i++)
             {
-                if (i == 3 || i == 7)   // Check for - characters
+                if (i == 3 || i == 7)                           // Check for - characters at the correct positions
                 {
                     if (!(number.charAt(i) == '-'))
                     {
                         return false;
                     }
                 }
-                else                    // Check numeric characters
+                else                                            // Check numeric characters
                 {
                     if (!Character.isDigit(number.charAt(i)))
                     {
@@ -187,7 +186,7 @@ public class Project1
      *          Date to be checked for validity
      *  @return Returns true if the input is a valid date, false otherwise
      */
-    public static boolean checkIfDateIsValid(String date)
+    static boolean checkIfDateIsValid(String date)
     {
         int firstSeparation = date.indexOf("/");
         int lastSeparation = date.lastIndexOf("/");
@@ -250,7 +249,7 @@ public class Project1
      *          Time to be checked for validity
      *  @return Returns true if the input is a valid time, false otherwise
      */
-    public static boolean checkIfTimeIsValid(String time)
+    static boolean checkIfTimeIsValid(String time)
     {
         int colonIndex = time.indexOf(":");
 
@@ -293,8 +292,10 @@ public class Project1
     /**
      *  Prints a short text snippit describing the functionality of the program to the console
      */
-    public static void printReadMe()
+    private static void printReadMe()
     {
-
+        System.out.println("This project models an invdividuals phone bill. The phone bill contains the customers name,");
+        System.out.println("and a list of phone calls associated with the current billing cycle. Each phone call monitors");
+        System.out.println("the ingoing and outgoing phone numbers, as well as the start and end time of the call.");
     }
 }
