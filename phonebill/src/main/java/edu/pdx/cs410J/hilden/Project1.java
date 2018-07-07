@@ -29,7 +29,8 @@ public class Project1
                           }
                           else if (arg.equals("-README"))
                           {
-                              readme = true;
+                              printReadMe();
+                              System.exit(0);
                           }
                           else
                           {
@@ -118,7 +119,7 @@ public class Project1
                 case 6  : if (checkIfTimeIsValid(arg))
                           {
                               endTime += " " + arg;
-                              call.setEndTime(startTime);
+                              call.setEndTime(endTime);
                               option++;
                           }
                           else
@@ -140,20 +141,19 @@ public class Project1
             {
 
             }
-
-            if (readme)
-            {
-
-            }
         }
         System.exit(0);
     }
 
-    // Check if input string is a valid phone number of format: nnn-nnn-nnnn
-    // Returns true if the format is valid, false otherwise
-    public static boolean checkIfPhoneNumberIsValid(String arg)
+    /**
+     *  Checks if the input phone number is a valid phone number of format nnn-nnn-nnnn
+     *  @param  number
+     *          Phone number to be checked for validity
+     *  @return Returns true if the input is a valid phone number, false otherwise
+     */
+    public static boolean checkIfPhoneNumberIsValid(String number)
     {
-        int length = arg.length();
+        int length = number.length();
         if (length != 12)               // Immediately check the correct length
         {
             return false;
@@ -164,14 +164,14 @@ public class Project1
             {
                 if (i == 3 || i == 7)   // Check for - characters
                 {
-                    if (!(arg.charAt(i) == '-'))
+                    if (!(number.charAt(i) == '-'))
                     {
                         return false;
                     }
                 }
                 else                    // Check numeric characters
                 {
-                    if (!Character.isDigit(arg.charAt(i)))
+                    if (!Character.isDigit(number.charAt(i)))
                     {
                         return false;
                     }
@@ -181,16 +181,20 @@ public class Project1
         return true;
     }
 
-    // Check if input string is a valid date of format: [n]n/[n]n/nnnn where [n] is optional
-    // Returns true if the format is valid, false otherwise
-    public static boolean checkIfDateIsValid(String arg)
+    /**
+     *  Checks if the input date is a valid date of format [n]n/[n]n/nnnn where [n] is optional
+     *  @param  date
+     *          Date to be checked for validity
+     *  @return Returns true if the input is a valid date, false otherwise
+     */
+    public static boolean checkIfDateIsValid(String date)
     {
-        int firstSeparation = arg.indexOf("/");
-        int lastSeparation = arg.lastIndexOf("/");
+        int firstSeparation = date.indexOf("/");
+        int lastSeparation = date.lastIndexOf("/");
 
-        String month =  arg.substring(0, firstSeparation);
-        String day = arg.substring(firstSeparation + 1, lastSeparation);
-        String year = arg.substring(lastSeparation + 1);
+        String month =  date.substring(0, firstSeparation);
+        String day = date.substring(firstSeparation + 1, lastSeparation);
+        String year = date.substring(lastSeparation + 1);
 
         int monthLength = month.length();
         if (monthLength == 1 || monthLength == 2)
@@ -240,14 +244,18 @@ public class Project1
         return true;
     }
 
-    // Check if input string is a valid time of format: [n]n:nn where [n] is optional
-    // Returns true if the format is valid, false otherwise
-    public static boolean checkIfTimeIsValid(String arg)
+    /**
+     *  Checks if the input time is a valid time of format [n]n:nn where [n] is optional
+     *  @param  time
+     *          Time to be checked for validity
+     *  @return Returns true if the input is a valid time, false otherwise
+     */
+    public static boolean checkIfTimeIsValid(String time)
     {
-        int colonIndex = arg.indexOf(":");
+        int colonIndex = time.indexOf(":");
 
-        String hour = arg.substring(0, colonIndex);
-        String minute = arg.substring(colonIndex + 1);
+        String hour = time.substring(0, colonIndex);
+        String minute = time.substring(colonIndex + 1);
 
         int hourLength = hour.length();
         if (hourLength == 1 || hourLength == 2)
@@ -280,5 +288,13 @@ public class Project1
             return false;
         }
         return true;
+    }
+
+    /**
+     *  Prints a short text snippit describing the functionality of the program to the console
+     */
+    public static void printReadMe()
+    {
+
     }
 }
