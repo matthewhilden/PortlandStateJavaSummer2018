@@ -5,18 +5,19 @@ package edu.pdx.cs410J.hilden;
  */
 public class Project1
 {
-
     public static void main(String[] args)
     {
         PhoneBill bill = new PhoneBill();
-        PhoneCall call = new PhoneCall();  // Refer to one of Dave's classes so that we can be sure it is on the classpath
+        PhoneCall call = new PhoneCall();
 
-        int option = 0;
-        boolean print = false;
-        boolean readme = false;
+        int option = 0;                     // Keep track of what field we are currently parsing
+        boolean print = false;              // Denotes -print
+        boolean readme = false;             // Denotes -README
 
-        boolean multiWordCustomer = false;
-        String customerName = "";
+        boolean multiWordCustomer = false;  // If the Customer name will use more than one argument
+        String customerName = "";           // Storage for concatenation of multi word Customers
+        String startTime = "";              // Storage for concatenation of start time and start date
+        String endTime = "";                // Storage for concatenation of end time and end date
 
         for (String arg : args)
         {
@@ -57,6 +58,7 @@ public class Project1
                               }
                           }
                           break;
+
                 case 1  : if (checkIfPhoneNumberIsValid(arg))
                           {
                               call.setCallerNumber(arg);
@@ -67,18 +69,68 @@ public class Project1
                               System.exit(1);
                           }
                           break;
+
                 case 2  : if (checkIfPhoneNumberIsValid(arg))
                           {
                               call.setCalleeNumber(arg);
                               option++;
                           }
+                          else
+                          {
+                              System.exit(1);
+                          }
                           break;
-                case 3  : break;
-                case 4  : break;
-                default : break;
+
+                case 3  : if (checkIfDateIsValid(arg))
+                          {
+                              startTime += arg;
+                              option++;
+                          }
+                          else
+                          {
+                              System.exit(1);
+                          }
+                          break;
+
+                case 4  : if (checkIfTimeIsValid(arg))
+                          {
+                              startTime += " " + arg;
+                              call.setStartTime(startTime);
+                              option++;
+                          }
+                          else
+                          {
+                              System.exit(1);
+                          }
+                          break;
+
+                case 5  : if (checkIfDateIsValid(arg))
+                          {
+                              endTime += arg;
+                              option++;
+                          }
+                          else
+                          {
+                              System.exit(1);
+                          }
+                          break;
+
+                case 6  : if (checkIfTimeIsValid(arg))
+                          {
+                              endTime += " " + arg;
+                              call.setEndTime(startTime);
+                              option++;
+                          }
+                          else
+                          {
+                              System.exit(1);
+                          }
+                          break;
+
+                default : System.exit(1);
             }
         }
-        if (option != 4)
+        if (option != 6)
         {
             System.exit(1);
         }
@@ -129,15 +181,104 @@ public class Project1
         return true;
     }
 
-    // Check if input string is a valid date
+    // Check if input string is a valid date of format: [n]n/[n]n/nnnn where [n] is optional
+    // Returns true if the format is valid, false otherwise
     public static boolean checkIfDateIsValid(String arg)
     {
+        int firstSeparation = arg.indexOf("/");
+        int lastSeparation = arg.lastIndexOf("/");
+
+        String month =  arg.substring(0, firstSeparation);
+        String day = arg.substring(firstSeparation + 1, lastSeparation);
+        String year = arg.substring(lastSeparation + 1);
+
+        int monthLength = month.length();
+        if (monthLength == 1 || monthLength == 2)
+        {
+            for (int i = 0; i < monthLength; i++)
+            {
+                if (!Character.isDigit(month.charAt(i)))
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+        int dayLength = day.length();
+        if (dayLength == 1 || dayLength == 2)
+        {
+            for (int i = 0; i < dayLength; i++)
+            {
+                if (!Character.isDigit(day.charAt(i)))
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+        int yearLength = year.length();
+        if (yearLength == 4)
+        {
+            for (int i = 0; i < yearLength; i++)
+            {
+                if (!Character.isDigit(year.charAt(i)))
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
         return true;
     }
 
-    // Check if input string is a valid time
+    // Check if input string is a valid time of format: [n]n:nn where [n] is optional
+    // Returns true if the format is valid, false otherwise
     public static boolean checkIfTimeIsValid(String arg)
     {
+        int colonIndex = arg.indexOf(":");
+
+        String hour = arg.substring(0, colonIndex);
+        String minute = arg.substring(colonIndex + 1);
+
+        int hourLength = hour.length();
+        if (hourLength == 1 || hourLength == 2)
+        {
+            for (int i = 0; i < hourLength; i++)
+            {
+                if (!Character.isDigit(hour.charAt(i)))
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+        int minuteLength = minute.length();
+        if (minuteLength == 2)
+        {
+            for (int i = 0; i < minuteLength; i++)
+            {
+                if (!Character.isDigit(minute.charAt(i)))
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
         return true;
     }
 }

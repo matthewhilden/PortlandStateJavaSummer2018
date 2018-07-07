@@ -2,11 +2,12 @@ package edu.pdx.cs410J.hilden;
 
 import org.junit.Test;
 
+import static edu.pdx.cs410J.hilden.Project1.checkIfDateIsValid;
 import static edu.pdx.cs410J.hilden.Project1.checkIfPhoneNumberIsValid;
+import static edu.pdx.cs410J.hilden.Project1.checkIfTimeIsValid;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
 
 /**
  * Unit tests for the {@link PhoneCall} class.
@@ -78,7 +79,20 @@ public class PhoneCallTest
     public void checkValidPhoneNumbers()
     {
         String phoneNumber = "555-555-5555";
-        boolean valid = checkIfPhoneNumberIsValid(phoneNumber);
-        assertTrue(valid);
+        assertTrue(checkIfPhoneNumberIsValid(phoneNumber));
+    }
+
+    @Test
+    public void checkValidDate()
+    {
+        String date = "07/06/2018";
+        assertTrue(checkIfDateIsValid(date));
+    }
+
+    @Test
+    public void checkValidTime()
+    {
+        String time = "4:58";
+        assertTrue(checkIfTimeIsValid(time));
     }
 }
