@@ -63,12 +63,4 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>
     {
         return phoneCalls;
     }
-
-    /**
-     *  Prints a ASCII text representation of the phone bill
-     */
-    public void printPhoneBill()
-    {
-
-    }
 }

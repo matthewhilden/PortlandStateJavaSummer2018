@@ -24,7 +24,7 @@ public class Project1
             {
                 case 0  : if (arg.equals("-README"))            // Parse -README
                           {
-                              printReadMe();
+                              README();
                               System.exit(0);
                           }
                           else if (arg.equals("-print"))        // Parse -print
@@ -66,6 +66,7 @@ public class Project1
                           }
                           else
                           {
+                              System.out.println("Invalid Argument! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -77,6 +78,7 @@ public class Project1
                           }
                           else
                           {
+                              System.out.println("Invalid Argument! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -88,6 +90,7 @@ public class Project1
                           }
                           else
                           {
+                              System.out.println("Invalid Argument! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -100,6 +103,7 @@ public class Project1
                           }
                           else
                           {
+                              System.out.println("Invalid Argument! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -111,6 +115,7 @@ public class Project1
                           }
                           else
                           {
+                              System.out.println("Invalid Argument! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -123,22 +128,29 @@ public class Project1
                           }
                           else
                           {
+                              System.out.println("Invalid Argument! Exiting Program");
                               System.exit(1);
                           }
                           break;
 
-                default : System.exit(1);               // Default denotes error and exits
+                default : System.out.println("Invalid Number of Arguments! Exiting Program");
+                          System.exit(1);               // Default denotes error and exits
             }
         }
         if (option != 7)                                       // Check for extraneous command line arguments
         {
+            System.out.println("Invalid Number of Arguments! Exiting Program");
             System.exit(1);
         }
         else
         {
             if (print)                                          // Print if required
             {
-                bill.printPhoneBill();
+                System.out.println("Phone Bill for Customer: " + bill.getCustomer() + "\n");
+                System.out.println("Caller: " + call.getCaller());
+                System.out.println("Callee: " + call.getCallee());
+                System.out.println("Start Time: " + call.getStartTimeString());
+                System.out.println("End Time: " + call.getEndTimeString());
             }
         }
         System.exit(0);
@@ -292,10 +304,11 @@ public class Project1
     /**
      *  Prints a short text snippit describing the functionality of the program to the console
      */
-    private static void printReadMe()
+    public static void README()
     {
-        System.out.println("This project models an invdividuals phone bill. The phone bill contains the customers name,");
-        System.out.println("and a list of phone calls associated with the current billing cycle. Each phone call monitors");
-        System.out.println("the ingoing and outgoing phone numbers, as well as the start and end time of the call.");
+        System.out.println("Project 1: Designing a Phone Bill Application\n");
+        System.out.print("This project models an invdividual's phone bill.\nThe phone bill contains the customer's name, ");
+        System.out.print("and a list of phone calls associated with the current billing cycle.\nEach phone call monitors ");
+        System.out.println("the ingoing and outgoing phone numbers, as well as the call's start and end time.");
     }
 }
