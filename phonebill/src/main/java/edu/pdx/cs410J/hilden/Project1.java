@@ -66,7 +66,7 @@ public class Project1
                           }
                           else
                           {
-                              System.out.println("Invalid Argument! Exiting Program");
+                              System.out.println("Invalid Caller Number! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -78,7 +78,7 @@ public class Project1
                           }
                           else
                           {
-                              System.out.println("Invalid Argument! Exiting Program");
+                              System.out.println("Invalid Callee Number! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -90,7 +90,7 @@ public class Project1
                           }
                           else
                           {
-                              System.out.println("Invalid Argument! Exiting Program");
+                              System.out.println("Invalid Start Time (date)! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -103,7 +103,7 @@ public class Project1
                           }
                           else
                           {
-                              System.out.println("Invalid Argument! Exiting Program");
+                              System.out.println("Invalid Start Time (time)! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -115,7 +115,7 @@ public class Project1
                           }
                           else
                           {
-                              System.out.println("Invalid Argument! Exiting Program");
+                              System.out.println("Invalid End Time (date)! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -128,7 +128,7 @@ public class Project1
                           }
                           else
                           {
-                              System.out.println("Invalid Argument! Exiting Program");
+                              System.out.println("Invalid End Time (time)! Exiting Program");
                               System.exit(1);
                           }
                           break;
@@ -307,7 +307,7 @@ public class Project1
     public static void README()
     {
         System.out.println("Project 1: Designing a Phone Bill Application\n");
-        System.out.print("This project models an invdividual's phone bill.\nThe phone bill contains the customer's name, ");
+        System.out.print("This project models an individual's phone bill.\nThe phone bill contains the customer's name, ");
         System.out.print("and a list of phone calls associated with the current billing cycle.\nEach phone call monitors ");
         System.out.println("the ingoing and outgoing phone numbers, as well as the call's start and end time.");
     }
