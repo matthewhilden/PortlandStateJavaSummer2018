@@ -14,12 +14,10 @@ public class Project2
         boolean print = false;              // Denotes -print
         boolean readTextFile = false;       // If we are reading from an input file
         boolean writeTextFile = false;      // If we are writing to an output file
-        boolean multiWordCustomer = false;  // If the Customer name will use more than one argument
 
         int option = 0;                     // Keep track of what field we are currently parsing
 
         String outputFile = "";             // Name of output file for writing
-        String customerName = "";           // Storage for concatenation of multi word Customers
         String startTime = "";              // Storage for concatenation of start time and start date
         String endTime = "";                // Storage for concatenation of end time and end date
 
@@ -32,7 +30,8 @@ public class Project2
                 System.exit(0);
             }
         }
-        for (String arg : args) {
+        for (String arg : args)
+        {
             switch (option)
             {
                 case 0: if (arg.equals("-textFile"))                // Parse -textFile
@@ -46,12 +45,16 @@ public class Project2
                         }
                         else                                        // Parse customerName
                         {
-                            if (readTextFile)
+                            if (readTextFile)                       // If we need to read from text file
                             {
                                 try
                                 {
                                     TextParser tp = new TextParser(arg);
                                     bill = tp.parse();
+                                    if (bill.getCustomer() == null)
+                                    {
+                                        writeTextFile = false;
+                                    }
                                     readTextFile = false;
                                     outputFile = arg;
                                 }
@@ -60,44 +63,18 @@ public class Project2
                                     System.out.println(p);
                                 }
                             }
-                            else if (arg.charAt(0) == '"')
+                            else
                             {
-                                multiWordCustomer = true;
-                                customerName += arg.substring(1);
-                            }
-                            else if (multiWordCustomer && arg.charAt(arg.length() - 1) == '"')
-                            {
-                                customerName += " " + arg.substring(0, arg.length() - 2);
                                 if (writeTextFile)
                                 {
-                                    if (!bill.getCustomer().equals(customerName))
+                                    if (!bill.getCustomer().equals(arg))
                                     {
                                         System.out.println("Customer names do not match! Exiting Program");
                                         System.exit(1);
                                     }
                                 }
-                                bill.setCustomerName(customerName);
+                                bill.setCustomerName(arg);
                                 option++;
-                            }
-                            else
-                            {
-                                if (multiWordCustomer)
-                                {
-                                    customerName += " " + arg;
-                                }
-                                else
-                                {
-                                    if (writeTextFile)
-                                    {
-                                        if (!bill.getCustomer().equals(customerName))
-                                        {
-                                            System.out.println("Customer names do not match! Exiting Program");
-                                            System.exit(1);
-                                        }
-                                    }
-                                    bill.setCustomerName(arg);
-                                    option++;
-                                }
                             }
                         }
                         break;
@@ -107,7 +84,7 @@ public class Project2
                             call.setCallerNumber(arg);
                             option++;
                         } else {
-                            System.out.println("Invalid Argument! Exiting Program");
+                            System.out.println("Invalid Caller Number! Exiting Program");
                             System.exit(1);
                         }
                         break;
@@ -117,7 +94,7 @@ public class Project2
                             call.setCalleeNumber(arg);
                             option++;
                         } else {
-                            System.out.println("Invalid Argument! Exiting Program");
+                            System.out.println("Invalid Callee Number! Exiting Program");
                             System.exit(1);
                         }
                         break;
@@ -127,7 +104,7 @@ public class Project2
                             startTime += arg;
                             option++;
                         } else {
-                            System.out.println("Invalid Argument! Exiting Program");
+                            System.out.println("Invalid Start Time (date)! Exiting Program");
                             System.exit(1);
                         }
                         break;
@@ -138,7 +115,7 @@ public class Project2
                             call.setStartTime(startTime);
                             option++;
                         } else {
-                            System.out.println("Invalid Argument! Exiting Program");
+                            System.out.println("Invalid Start Time (time)! Exiting Program");
                             System.exit(1);
                         }
                         break;
@@ -148,7 +125,7 @@ public class Project2
                             endTime += arg;
                             option++;
                         } else {
-                            System.out.println("Invalid Argument! Exiting Program");
+                            System.out.println("Invalid End Time (date)! Exiting Program");
                             System.exit(1);
                         }
                         break;
@@ -159,7 +136,7 @@ public class Project2
                             call.setEndTime(endTime);
                             option++;
                         } else {
-                            System.out.println("Invalid Argument! Exiting Program");
+                            System.out.println("Invalid End Time (time)! Exiting Program");
                             System.exit(1);
                         }
                         break;
@@ -352,7 +329,7 @@ public class Project2
     public static void README()
     {
         System.out.println("Project 2: Storing Your Phone Bill in a Text File\n");
-        System.out.println("This project implements classes that read and write information from a text file");
+        System.out.println("This project implements classes that read and write information from a text file.");
         System.out.println("The program will optionally read a phone bill from a text file, and create a new");
         System.out.println("phone bill object from the information. Then the program reads input from the command");
         System.out.println("line and creates a new phone call to add to the current phone bill. The program then");

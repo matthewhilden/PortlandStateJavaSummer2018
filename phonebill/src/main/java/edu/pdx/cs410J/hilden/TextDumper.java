@@ -6,7 +6,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 /**
  *  The TextDumper class dumps the content of a PhoneBill object to a text file
  */
@@ -16,7 +15,8 @@ public class TextDumper implements PhoneBillDumper<PhoneBill>
 
     /**
      *  Default Constructor
-     *  Does not take any input parameters
+     *  @param  textFile
+     *          Name of the text file to write output data from
      */
     TextDumper(String textFile)
     {
@@ -51,7 +51,7 @@ public class TextDumper implements PhoneBillDumper<PhoneBill>
             }
             else
             {
-                System.out.println("Null Field! Exiting Program");
+                System.out.println("Caller is Null! Exiting Program");
                 System.exit(1);
             }
             String callee = call.getCallee();
@@ -61,7 +61,7 @@ public class TextDumper implements PhoneBillDumper<PhoneBill>
             }
             else
             {
-                System.out.println("Null Field! Exiting Program");
+                System.out.println("Callee is Null! Exiting Program");
                 System.exit(1);
             }
             String startTime = call.getStartTimeString();
@@ -75,13 +75,13 @@ public class TextDumper implements PhoneBillDumper<PhoneBill>
                 }
                 else
                 {
-                    System.out.println("Invalid Field! Exiting Program");
+                    System.out.println("Invalid Start Time! Exiting Program");
                     System.exit(1);
                 }
             }
             else
             {
-                System.out.println("Null Field! Exiting Program");
+                System.out.println("Start Time is Null! Exiting Program");
                 System.exit(1);
             }
             String endTime = call.getEndTimeString();
@@ -95,13 +95,13 @@ public class TextDumper implements PhoneBillDumper<PhoneBill>
                 }
                 else
                 {
-                    System.out.println("Invalid Field! Exiting Program");
+                    System.out.println("Invalid End Time! Exiting Program");
                     System.exit(1);
                 }
             }
             else
             {
-                System.out.println("Null Field! Exiting Program");
+                System.out.println("End Time is Null! Exiting Program");
                 System.exit(1);
             }
         }

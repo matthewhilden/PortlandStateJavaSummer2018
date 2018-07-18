@@ -16,6 +16,7 @@ import static edu.pdx.cs410J.hilden.Project2.checkIfTimeIsValid;
 public class TextParser implements PhoneBillParser<PhoneBill>
 {
     private BufferedReader reader;
+    String textFile;
 
     /**
      *  Default Constructor
@@ -24,23 +25,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
      */
     TextParser(String textFile)
     {
-        try
-        {
-            File file = new File(textFile);
-            if (file.exists())
-            {
-                this.reader = new BufferedReader(new FileReader(textFile));
-            }
-            else
-            {
-                System.out.println("File does not exist!");
-                System.exit(1);
-            }
-        }
-        catch (FileNotFoundException e)
-        {
-            System.out.println(e);
-        }
+        this.textFile = textFile;
     }
 
     /**
@@ -55,6 +40,23 @@ public class TextParser implements PhoneBillParser<PhoneBill>
         PhoneBill bill = new PhoneBill();
         PhoneCall call = new PhoneCall();
 
+        try
+        {
+            File file = new File(textFile);
+            if (file.exists())
+            {
+                this.reader = new BufferedReader(new FileReader(textFile));
+            }
+            else
+            {
+                return bill;
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            System.out.println(e);
+        }
+
         String startTime = "";              // Storage for concatenation of start time and start date
         String endTime = "";                // Storage for concatenation of end time and end date
 
@@ -68,7 +70,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                 {
                     case 0:  if (line.equals(""))
                              {
-                                 System.out.println("Invalid Argument! Exiting Program");
+                                 System.out.println("Customer Name is Invalid! Exiting Program");
                                  System.exit(1);
                              }
                              bill.setCustomerName(line);
@@ -82,7 +84,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                              }
                              else
                              {
-                                 System.out.println("Invalid Argument! Exiting Program");
+                                 System.out.println("Caller Number is Invalid! Exiting Program");
                                  System.exit(1);
                              }
                              break;
@@ -94,7 +96,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                              }
                              else
                              {
-                                 System.out.println("Invalid Argument! Exiting Program");
+                                 System.out.println("Callee Number is Invalid! Exiting Program");
                                  System.exit(1);
                              }
                              break;
@@ -106,7 +108,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                              }
                              else
                              {
-                                 System.out.println("Invalid Argument! Exiting Program");
+                                 System.out.println("Start Time is Invalid! Exiting Program");
                                  System.exit(1);
                              }
                              break;
@@ -119,7 +121,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                              }
                              else
                              {
-                                 System.out.println("Invalid Argument! Exiting Program");
+                                 System.out.println("Start Time is Invalid! Exiting Program");
                                  System.exit(1);
                              }
                              break;
@@ -130,7 +132,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                              }
                              else
                              {
-                                 System.out.println("Invalid Argument! Exiting Program");
+                                 System.out.println("End Time is Invalid! Exiting Program");
                                  System.exit(1);
                              }
                              break;
@@ -142,7 +144,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                              }
                              else
                              {
-                                 System.out.println("Invalid Argument! Exiting Program");
+                                 System.out.println("End Time is Invalid! Exiting Program");
                                  System.exit(1);
                              }
                              break;
