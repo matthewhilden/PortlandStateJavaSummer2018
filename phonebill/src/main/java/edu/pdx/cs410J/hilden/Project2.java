@@ -51,10 +51,6 @@ public class Project2
                                 {
                                     TextParser tp = new TextParser(arg);
                                     bill = tp.parse();
-                                    if (bill.getCustomer() == null)
-                                    {
-                                        writeTextFile = false;
-                                    }
                                     readTextFile = false;
                                     outputFile = arg;
                                 }
@@ -67,10 +63,13 @@ public class Project2
                             {
                                 if (writeTextFile)
                                 {
-                                    if (!bill.getCustomer().equals(arg))
+                                    if (!(bill.getCustomer() == null))
                                     {
-                                        System.out.println("Customer names do not match! Exiting Program");
-                                        System.exit(1);
+                                        if (!bill.getCustomer().equals(arg))
+                                        {
+                                            System.out.println("Customer names do not match! Exiting Program");
+                                            System.exit(1);
+                                        }
                                     }
                                 }
                                 bill.setCustomerName(arg);

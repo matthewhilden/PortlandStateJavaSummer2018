@@ -2,6 +2,8 @@ package edu.pdx.cs410J.hilden;
 
 import edu.pdx.cs410J.AbstractPhoneCall;
 
+import java.util.Date;
+
 /**
  *  The PhoneCall class represents a PhoneCall object that contains information regarding a single PhoneCall
  */
@@ -121,5 +123,17 @@ public class PhoneCall extends AbstractPhoneCall
     public String getEndTimeString()
     {
         return endTime;
+    }
+
+    @Override
+    public Date getStartTime()
+    {
+        return null;
+    }
+
+    @Override
+    public Date getEndTime()
+    {
+        return null;
     }
 }
