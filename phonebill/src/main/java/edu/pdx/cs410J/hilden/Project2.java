@@ -2,6 +2,7 @@ package edu.pdx.cs410J.hilden;
 
 import edu.pdx.cs410J.ParserException;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Project2
@@ -151,6 +152,7 @@ public class Project2
         }
         else
         {
+
             bill.addPhoneCall(call);
             if (print)
             {
@@ -162,6 +164,16 @@ public class Project2
             }
             if (writeTextFile)
             {
+                File file = new File(outputFile);
+                try
+                {
+                    file.getParentFile().mkdirs();
+                    file.createNewFile();
+                }
+                catch (IOException i)
+                {
+                    System.out.println(i);
+                }
                 TextDumper dumper = new TextDumper(outputFile);
                 try
                 {

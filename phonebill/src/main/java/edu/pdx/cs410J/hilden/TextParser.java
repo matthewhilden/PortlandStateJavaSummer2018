@@ -49,15 +49,6 @@ public class TextParser implements PhoneBillParser<PhoneBill>
             }
             else
             {
-                try
-                {
-                    file.getParentFile().mkdirs();
-                    file.createNewFile();
-                }
-                catch (IOException i)
-                {
-                    System.out.println(i);
-                }
                 return bill;
             }
         }
@@ -168,10 +159,6 @@ public class TextParser implements PhoneBillParser<PhoneBill>
         catch (IOException e)
         {
             System.out.println(e);
-        }
-        if (i == 0)                         // Empty File
-        {
-            return bill;
         }
         if (i != 7)
         {
