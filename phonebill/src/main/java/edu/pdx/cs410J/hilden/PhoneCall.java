@@ -2,17 +2,18 @@ package edu.pdx.cs410J.hilden;
 
 import edu.pdx.cs410J.AbstractPhoneCall;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
  *  The PhoneCall class represents a PhoneCall object that contains information regarding a single PhoneCall
  */
-public class PhoneCall extends AbstractPhoneCall
+public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall>
 {
     private String callerNumber;
     private String calleeNumber;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
 
     /**
      *  Creates a new PhoneCall
@@ -33,11 +34,11 @@ public class PhoneCall extends AbstractPhoneCall
      *  @param  calleeNumber
      *          Phone number of the person receiving the call
      *  @param  startTime
-     *          The time at which the phone call began
+     *          The time/date at which the phone call began
      *  @param  endTime
-     *          The time at which the phone call ended
+     *          The time/date at which the phone call ended
      */
-    PhoneCall(String callerNumber, String calleeNumber, String startTime, String endTime)
+    PhoneCall(String callerNumber, String calleeNumber, Date startTime, Date endTime)
     {
         this.callerNumber = callerNumber;
         this.calleeNumber = calleeNumber;
@@ -70,7 +71,7 @@ public class PhoneCall extends AbstractPhoneCall
      *  @param  startTime
      *          The time at which the phone call began
      */
-    public void setStartTime(String startTime)
+    public void setStartTime(Date startTime)
     {
         this.startTime = startTime;
     }
@@ -80,7 +81,7 @@ public class PhoneCall extends AbstractPhoneCall
      *  @param  endTime
      *          The time at which the phone call ended
      */
-    public void setEndTime(String endTime)
+    public void setEndTime(Date endTime)
     {
         this.endTime = endTime;
     }
@@ -112,7 +113,8 @@ public class PhoneCall extends AbstractPhoneCall
     @Override
     public String getStartTimeString()
     {
-        return startTime;
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+        return df.format(startTime);
     }
 
     /**
@@ -122,18 +124,47 @@ public class PhoneCall extends AbstractPhoneCall
     @Override
     public String getEndTimeString()
     {
-        return endTime;
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+        return df.format(endTime);
     }
 
     @Override
     public Date getStartTime()
     {
-        return null;
+        return startTime;
     }
 
     @Override
     public Date getEndTime()
     {
-        return null;
+        return endTime;
+    }
+
+    @Override
+    public int compareTo(PhoneCall phoneCall)
+    {
+        if (this.getStartTime().before(phoneCall.getStartTime()))
+        {
+            return -1;
+        }
+        else if (this.getStartTime().after(phoneCall.getStartTime()))
+        {
+            return 1;
+        }
+        else
+        {
+            if (this.getCaller().compareTo(phoneCall.getCaller()) < 0)
+            {
+                return -1;
+            }
+            else if (this.getCaller().compareTo(phoneCall.getCaller()) > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

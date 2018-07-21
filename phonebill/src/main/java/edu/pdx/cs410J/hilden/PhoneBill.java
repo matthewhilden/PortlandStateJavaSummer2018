@@ -2,8 +2,8 @@ package edu.pdx.cs410J.hilden;
 
 import edu.pdx.cs410J.AbstractPhoneBill;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.TreeSet;
 
 /**
  *  The PhoneBill class represents a PhoneBill object that contains information about a users phone bill
@@ -20,7 +20,7 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall>
     PhoneBill()
     {
         this.customerName = null;
-        this.phoneCalls = new ArrayList<>();
+        this.phoneCalls = new TreeSet<>();
     }
 
     /**
