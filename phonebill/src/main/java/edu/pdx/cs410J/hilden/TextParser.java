@@ -4,10 +4,14 @@ import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.PhoneBillParser;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import static edu.pdx.cs410J.hilden.Project2.checkIfDateIsValid;
-import static edu.pdx.cs410J.hilden.Project2.checkIfPhoneNumberIsValid;
-import static edu.pdx.cs410J.hilden.Project2.checkIfTimeIsValid;
+import static edu.pdx.cs410J.hilden.Project3.checkIfDateIsValid;
+import static edu.pdx.cs410J.hilden.Project3.checkIfPhoneNumberIsValid;
+import static edu.pdx.cs410J.hilden.Project3.checkIfTimeIsValid;
 
 /**
  *  The TextParser class reads a text file and creates a new PhoneBill object containing PhoneCall(s)
@@ -57,8 +61,8 @@ public class TextParser implements PhoneBillParser<PhoneBill>
             System.out.println(e);
         }
 
-        String startTime = "";              // Storage for concatenation of start time and start date
-        String endTime = "";                // Storage for concatenation of end time and end date
+        String startTime = "";
+        String endTime = "";
 
         String line;
         int i = 0;
@@ -116,7 +120,16 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                     case 4:  if (checkIfTimeIsValid(line))
                              {
                                  startTime += " " + line;
-                                 call.setStartTime(startTime);
+                                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                                 try
+                                 {
+                                     Date startDate = df.parse(startTime);
+                                     call.setStartTime(startDate);
+                                 }
+                                 catch (ParseException p)
+                                 {
+                                     System.out.println(p);
+                                 }
                                  i++;
                              }
                              else
@@ -125,6 +138,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                                  System.exit(1);
                              }
                              break;
+
                     case 5:  if (checkIfDateIsValid(line))
                              {
                                  endTime += line;
@@ -136,10 +150,20 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                                  System.exit(1);
                              }
                              break;
+
                     case 6:  if (checkIfTimeIsValid(line))
                              {
                                  endTime += " " + line;
-                                 call.setEndTime(endTime);
+                                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                                 try
+                                 {
+                                     Date endDate = df.parse(endTime);
+                                     call.setStartTime(endDate);
+                                 }
+                                 catch (ParseException p)
+                                 {
+                                     System.out.println(p);
+                                 }
                                  i++;
                              }
                              else
@@ -148,7 +172,8 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                                  System.exit(1);
                              }
                              break;
-                    default: if (!line.equals(""))              // Scrub extra space - Don't count as invalid argument
+
+                    default: if (!line.equals(""))
                              {
                                  System.out.println("Invalid Number of Arguments in file! Exiting Program");
                                  System.exit(1);

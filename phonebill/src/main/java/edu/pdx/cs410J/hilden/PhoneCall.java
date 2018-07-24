@@ -3,6 +3,7 @@ package edu.pdx.cs410J.hilden;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -113,7 +114,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     @Override
     public String getStartTimeString()
     {
-        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
         return df.format(startTime);
     }
 
@@ -124,22 +125,36 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     @Override
     public String getEndTimeString()
     {
-        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
         return df.format(endTime);
     }
 
+    /**
+     *  Returns the Start Time as a Date object
+     *  @return Returns a Date object
+     */
     @Override
     public Date getStartTime()
     {
         return startTime;
     }
 
+    /**
+     *  Returns the End Time as a Date object
+     *  @return Returns a Date object
+     */
     @Override
     public Date getEndTime()
     {
         return endTime;
     }
 
+    /**
+     *  Defines the natural ordering of two PhoneCall objects
+     *  @param  phoneCall
+     *          An object representing an individual phone call
+     *  @return Returns -1 if this comes first, 1 if this comes last and 0 if equal
+     */
     @Override
     public int compareTo(PhoneCall phoneCall)
     {

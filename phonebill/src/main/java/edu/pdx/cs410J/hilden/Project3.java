@@ -5,6 +5,8 @@ import edu.pdx.cs410J.ParserException;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Project3
@@ -143,8 +145,16 @@ public class Project3
                 case 5: if (checkIfAmPm(arg))
                         {
                             startTime += " " + arg;
-                            DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-                            call.setStartTime(new Date(df.format(startTime)));
+                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                            try
+                            {
+                                Date startDate = df.parse(startTime);
+                                call.setStartTime(startDate);
+                            }
+                            catch (ParseException p)
+                            {
+                                System.out.println(p);
+                            }
                             option++;
                         }
                         else
@@ -181,8 +191,16 @@ public class Project3
                 case 8: if (checkIfAmPm(arg))
                         {
                             endTime += " " + arg;
-                            DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-                            call.setEndTime(new Date(df.format(endTime)));
+                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                            try
+                            {
+                                Date endDate = df.parse(endTime);
+                                call.setStartTime(endDate);
+                            }
+                            catch (ParseException p)
+                            {
+                                System.out.println(p);
+                            }
                             option++;
                         }
                         else
