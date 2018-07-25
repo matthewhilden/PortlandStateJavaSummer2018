@@ -178,6 +178,12 @@ public class Project3
                             try
                             {
                                 Date endDate = df.parse(endTime);
+
+                                if (endDate.before(df.parse(startTime)));
+                                {
+                                    System.out.println("End Time is before Start Time! Exiting Program");
+                                    System.exit(1);
+                                }
                                 call.setEndTime(endDate);
                             }
                             catch (ParseException p)

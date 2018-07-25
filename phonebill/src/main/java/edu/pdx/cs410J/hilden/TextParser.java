@@ -105,7 +105,7 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                     System.exit(1);
                 }
 
-                line = reader.readLine();
+                String startTime = reader.readLine();
                 if (line != null)
                 {
                     int startTimeFirstSpace = line.indexOf(" ");
@@ -168,6 +168,11 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                                 try
                                 {
                                     Date endDate = df.parse(line);
+                                    if (endDate.before(df.parse(startTime)));
+                                    {
+                                        System.out.println("End Time is before Start Time! Exiting Program");
+                                        System.exit(1);
+                                    }
                                     call.setEndTime(endDate);
                                 }
                                 catch (ParseException p)
