@@ -210,6 +210,7 @@ public class Project3
         }
         else
         {
+            bill.addPhoneCall(call);
             if (!inputOutputFile.equals(""))
             {
                 try
@@ -226,7 +227,7 @@ public class Project3
                 {
                     System.out.println(p);
                 }
-                bill.addPhoneCall(call);
+
             }
             if (!prettyFile.equals(""))
             {
