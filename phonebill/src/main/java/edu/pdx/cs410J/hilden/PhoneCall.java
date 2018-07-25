@@ -114,7 +114,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     @Override
     public String getStartTimeString()
     {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
         return df.format(startTime);
     }
 
@@ -125,7 +125,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     @Override
     public String getEndTimeString()
     {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
         return df.format(endTime);
     }
 

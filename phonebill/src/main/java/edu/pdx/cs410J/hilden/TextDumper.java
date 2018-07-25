@@ -67,17 +67,7 @@ public class TextDumper implements PhoneBillDumper<PhoneBill>
             String startTime = call.getStartTimeString();
             if (startTime != null)
             {
-                int index = startTime.indexOf(" ");
-                if (index != -1)
-                {
-                    writer.write(startTime.substring(0, index) + "\n");
-                    writer.write(startTime.substring(index + 1) + "\n");
-                }
-                else
-                {
-                    System.out.println("Invalid Start Time! Exiting Program");
-                    System.exit(1);
-                }
+                writer.write(startTime + "\n");
             }
             else
             {
@@ -87,17 +77,7 @@ public class TextDumper implements PhoneBillDumper<PhoneBill>
             String endTime = call.getEndTimeString();
             if (endTime != null)
             {
-                int index = endTime.indexOf(" ");
-                if (index != -1)
-                {
-                    writer.write(endTime.substring(0, index) + "\n");
-                    writer.write(endTime.substring(index + 1) + "\n");
-                }
-                else
-                {
-                    System.out.println("Invalid End Time! Exiting Program");
-                    System.exit(1);
-                }
+                writer.write(endTime + "\n");
             }
             else
             {

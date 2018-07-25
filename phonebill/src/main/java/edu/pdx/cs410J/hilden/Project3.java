@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Project3
 {
@@ -23,7 +24,7 @@ public class Project3
 
         int option = 0;                     // Keep track of what field we are currently parsing
 
-        String outputFile = "";             // Name of output file for writing
+        String inputOutputFile = "";        // Name of output file for writing
         String prettyFile = "";             // Name of output file for pretty printing
         String startTime = "";              // Storage for concatenation of start time and start date
         String endTime = "";                // Storage for concatenation of end time and end date
@@ -63,31 +64,11 @@ public class Project3
                             }
                             else if (readTextFile)
                             {
-                                try
-                                {
-                                    TextParser tp = new TextParser(arg);
-                                    bill = tp.parse();
-                                    readTextFile = false;
-                                    outputFile = arg;
-                                }
-                                catch (ParserException p)
-                                {
-                                    System.out.println(p);
-                                }
+                                inputOutputFile = arg;
+                                readTextFile = false;
                             }
                             else
                             {
-                                if (writeTextFile)
-                                {
-                                    if (!(bill.getCustomer() == null))
-                                    {
-                                        if (!bill.getCustomer().equals(arg))
-                                        {
-                                            System.out.println("Customer names do not match! Exiting Program");
-                                            System.exit(1);
-                                        }
-                                    }
-                                }
                                 bill.setCustomerName(arg);
                                 option++;
                             }
@@ -145,7 +126,8 @@ public class Project3
                 case 5: if (checkIfAmPm(arg))
                         {
                             startTime += " " + arg;
-                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm aa");
+                            df.setTimeZone(TimeZone.getTimeZone("GMT"));
                             try
                             {
                                 Date startDate = df.parse(startTime);
@@ -191,11 +173,12 @@ public class Project3
                 case 8: if (checkIfAmPm(arg))
                         {
                             endTime += " " + arg;
-                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm aa");
+                            df.setTimeZone(TimeZone.getTimeZone("GMT"));
                             try
                             {
                                 Date endDate = df.parse(endTime);
-                                call.setStartTime(endDate);
+                                call.setEndTime(endDate);
                             }
                             catch (ParseException p)
                             {
@@ -221,42 +204,71 @@ public class Project3
         }
         else
         {
-
-            bill.addPhoneCall(call);
-            if (print)
+            if (!inputOutputFile.equals(""))
             {
-                System.out.println("Phone Bill for Customer: " + bill.getCustomer() + "\n");
-                System.out.println("Caller: " + call.getCaller());
-                System.out.println("Callee: " + call.getCallee());
-                System.out.println("Start Time: " + call.getStartTimeString());
-                System.out.println("End Time: " + call.getEndTimeString());
+                try
+                {
+                    String inputCustomerName = bill.getCustomer();
+                    TextParser tp = new TextParser(inputOutputFile);
+                    bill = tp.parse();
+                    if (bill.getCustomer().equals(inputCustomerName))
+                    {
+                       System.out.println("Customer names do not match! Exiting Program");
+                    }
+                }
+                catch (ParserException p)
+                {
+                    System.out.println(p);
+                }
+                bill.addPhoneCall(call);
             }
             if (!prettyFile.equals(""))
             {
-                PrettyPrinter printer = new PrettyPrinter(prettyFile);
-                try
+                if (prettyFile.equals("-"))
                 {
-                    printer.dump(bill);
-
+                    print = true;
                 }
-                catch (IOException i)
+                else
                 {
-                    System.out.println(i);
+                    PrettyPrinter printer = new PrettyPrinter(prettyFile);
+                    try
+                    {
+                        printer.dump(bill);
+
+                    }
+                    catch (IOException i)
+                    {
+                        System.out.println(i);
+                    }
+                }
+            }
+            if (print)
+            {
+                System.out.println("Phone Bill for Customer: " + bill.getCustomer() + "\n");
+                for (PhoneCall phoneCall : bill.getPhoneCalls())
+                {
+                    System.out.println("Caller: " + phoneCall.getCaller());
+                    System.out.println("Callee: " + phoneCall.getCallee());
+                    System.out.println("Start Time: " + phoneCall.getStartTimeString());
+                    System.out.println("End Time: " + phoneCall.getEndTimeString() + "\n");
                 }
             }
             if (writeTextFile)
             {
-                File file = new File(outputFile);
+                File file = new File(inputOutputFile);
                 try
                 {
-                    file.getParentFile().mkdirs();
-                    file.createNewFile();
+                    if (!file.exists())
+                    {
+                        file.getParentFile().mkdirs();
+                        file.createNewFile();
+                    }
                 }
                 catch (IOException i)
                 {
                     System.out.println(i);
                 }
-                TextDumper dumper = new TextDumper(outputFile);
+                TextDumper dumper = new TextDumper(inputOutputFile);
                 try
                 {
                     dumper.dump(bill);
@@ -400,17 +412,25 @@ public class Project3
         {
             if (hourLength == 2)
             {
-                if (time.charAt(0) != '1')
-                {
-                    return false;
-                }
-                else
+                if (time.charAt(0) == '0')
                 {
                     char secondDigit = time.charAt(1);
-                    if (!(secondDigit >= '0' && secondDigit <= '2'))
+                    if (!(secondDigit >= '0' && secondDigit <= '9'))
                     {
                         return false;
                     }
+                }
+                else if (time.charAt(0) == '1')
+                {
+                    char secondDigit = time.charAt(1);
+                    if (!(secondDigit == '0' || secondDigit == '1' || secondDigit == '2'))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
                 }
             }
             else

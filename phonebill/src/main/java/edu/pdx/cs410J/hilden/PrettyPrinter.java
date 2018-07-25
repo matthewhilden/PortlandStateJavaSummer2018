@@ -3,8 +3,10 @@ package edu.pdx.cs410J.hilden;
 import edu.pdx.cs410J.PhoneBillDumper;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class PrettyPrinter implements PhoneBillDumper<PhoneBill>
 {
@@ -19,6 +21,12 @@ public class PrettyPrinter implements PhoneBillDumper<PhoneBill>
     {
         try
         {
+            File file = new File(textFile);
+            if (!file.exists())
+            {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            }
             writer = new BufferedWriter(new FileWriter(textFile));
         }
         catch (IOException i)
@@ -51,7 +59,7 @@ public class PrettyPrinter implements PhoneBillDumper<PhoneBill>
             }
             else
             {
-                writer.write(phoneBill.getCustomer() + "\n");
+                writer.write(phoneBill.getCustomer() + "\n\n");
             }
             for (PhoneCall call : phoneBill.getPhoneCalls())
             {
@@ -95,10 +103,8 @@ public class PrettyPrinter implements PhoneBillDumper<PhoneBill>
                     System.out.println("End Time is Null! Exiting Program");
                     System.exit(1);
                 }
-                long callDuration = call.getStartTime().getTime() - call.getEndTime().getTime();
-                long minutesDuration = callDuration / (60 * 1000) % 60;
-                System.out.println("Call Duration: " + minutesDuration + " minutes");
-                System.out.println();
+                long callDuration = call.getEndTime().getTime() - call.getStartTime().getTime();
+                writer.write("Call Duration: " + TimeUnit.MILLISECONDS.toMinutes(callDuration) + " minutes\n\n");
             }
             writer.close();
         }
