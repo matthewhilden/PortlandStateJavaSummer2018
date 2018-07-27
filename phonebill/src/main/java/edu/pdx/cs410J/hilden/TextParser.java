@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 import static edu.pdx.cs410J.hilden.Project3.*;
 
@@ -41,7 +40,6 @@ public class TextParser implements PhoneBillParser<PhoneBill>
     public PhoneBill parse() throws ParserException
     {
         PhoneBill bill = new PhoneBill();
-
         try
         {
             File file = new File(textFile);
@@ -64,15 +62,11 @@ public class TextParser implements PhoneBillParser<PhoneBill>
         try
         {
             line = reader.readLine();
-            if (line == null || line.equals(""))
-            {
-                System.out.println("Customer Name in file is Invalid! Exiting Program");
-                System.exit(1);
-            }
-            else
+            if (line != null)
             {
                 bill.setCustomerName(line);
             }
+
             while ((line = reader.readLine()) != null)
             {
                 PhoneCall call = new PhoneCall();
@@ -106,21 +100,21 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                 }
 
                 String startTime = reader.readLine();
-                if (line != null)
+                Date startDate = new Date();
+                if (startTime != null)
                 {
-                    int startTimeFirstSpace = line.indexOf(" ");
-                    int startTimeSecondSpace = line.lastIndexOf(" ");
-                    if (checkIfDateIsValid(line.substring(0, startTimeFirstSpace)))
+                    int startTimeFirstSpace = startTime.indexOf(" ");
+                    int startTimeSecondSpace = startTime.lastIndexOf(" ");
+                    if (checkIfDateIsValid(startTime.substring(0, startTimeFirstSpace)))
                     {
-                        if (checkIfTimeIsValid(line.substring(startTimeFirstSpace + 1, startTimeSecondSpace)))
+                        if (checkIfTimeIsValid(startTime.substring(startTimeFirstSpace + 1, startTimeSecondSpace)))
                         {
-                            if (checkIfAmPm(line.substring(startTimeSecondSpace + 1)))
+                            if (checkIfAmPm(startTime.substring(startTimeSecondSpace + 1)))
                             {
-                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm aa");
-                                df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                                DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
                                 try
                                 {
-                                    Date startDate = df.parse(line);
+                                    startDate = df.parse(startTime);
                                     call.setStartTime(startDate);
                                 }
                                 catch (ParseException p)
@@ -152,28 +146,30 @@ public class TextParser implements PhoneBillParser<PhoneBill>
                     System.exit(1);
                 }
 
-                line = reader.readLine();
-                if (line != null)
+                String endTime = reader.readLine();
+                if (endTime != null)
                 {
-                    int endTimeFirstSpace = line.indexOf(" ");
-                    int endTimeSecondSpace = line.lastIndexOf(" ");
-                    if (checkIfDateIsValid(line.substring(0, endTimeFirstSpace)))
+                    int endTimeFirstSpace = endTime.indexOf(" ");
+                    int endTimeSecondSpace = endTime.lastIndexOf(" ");
+                    if (checkIfDateIsValid(endTime.substring(0, endTimeFirstSpace)))
                     {
-                        if (checkIfTimeIsValid(line.substring(endTimeFirstSpace + 1, endTimeSecondSpace)))
+                        if (checkIfTimeIsValid(endTime.substring(endTimeFirstSpace + 1, endTimeSecondSpace)))
                         {
-                            if (checkIfAmPm(line.substring(endTimeSecondSpace + 1)))
+                            if (checkIfAmPm(endTime.substring(endTimeSecondSpace + 1)))
                             {
-                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm aa");
-                                df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                                DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
                                 try
                                 {
-                                    Date endDate = df.parse(line);
-                                    if (endDate.before(df.parse(startTime)));
+                                    Date endDate = df.parse(endTime);
+                                    if (startDate.before(endDate))
                                     {
-                                        System.out.println("End Time is before Start Time! Exiting Program");
+                                        call.setEndTime(endDate);
+                                    }
+                                    else
+                                    {
+                                        System.out.println("End Time in file is before Start Time in file! Exiting Program");
                                         System.exit(1);
                                     }
-                                    call.setEndTime(endDate);
                                 }
                                 catch (ParseException p)
                                 {

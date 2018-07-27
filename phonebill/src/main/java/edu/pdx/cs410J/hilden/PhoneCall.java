@@ -114,7 +114,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     @Override
     public String getStartTimeString()
     {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
         return df.format(startTime);
     }
 
@@ -125,7 +125,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     @Override
     public String getEndTimeString()
     {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
         return df.format(endTime);
     }
 
@@ -151,6 +151,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
 
     /**
      *  Defines the natural ordering of two PhoneCall objects
+     *  The natural ordering sorts PhoneCall objects by begin time and then by caller
      *  @param  phoneCall
      *          An object representing an individual phone call
      *  @return Returns -1 if this comes first, 1 if this comes last and 0 if equal

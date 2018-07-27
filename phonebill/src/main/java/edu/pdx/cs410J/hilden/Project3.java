@@ -8,7 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class Project3
 {
@@ -126,8 +126,7 @@ public class Project3
                 case 5: if (checkIfAmPm(arg))
                         {
                             startTime += " " + arg;
-                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm aa");
-                            df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                            DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
                             try
                             {
                                 Date startDate = df.parse(startTime);
@@ -173,15 +172,17 @@ public class Project3
                 case 8: if (checkIfAmPm(arg))
                         {
                             endTime += " " + arg;
-                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm aa");
-                            df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                            DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
                             try
                             {
                                 Date endDate = df.parse(endTime);
-
-                                if (endDate.before(df.parse(startTime)));
+                                if (df.parse(call.getStartTimeString()).before(endDate))
                                 {
-                                    System.out.println("End Time is before Start Time! Exiting Program");
+                                    call.setEndTime(endDate);
+                                }
+                                else
+                                {
+                                    System.out.println("End Time on command line is before Start Time on command line! Exiting Program");
                                     System.exit(1);
                                 }
                                 call.setEndTime(endDate);
@@ -210,7 +211,6 @@ public class Project3
         }
         else
         {
-            bill.addPhoneCall(call);
             if (!inputOutputFile.equals(""))
             {
                 try
@@ -218,17 +218,25 @@ public class Project3
                     String inputCustomerName = bill.getCustomer();
                     TextParser tp = new TextParser(inputOutputFile);
                     bill = tp.parse();
-                    if (bill.getCustomer().equals(inputCustomerName))
+                    if (bill.getCustomer() == null)
                     {
-                       System.out.println("Customer names do not match! Exiting Program");
+                        bill.setCustomerName(inputCustomerName);
+                    }
+                    else
+                    {
+                        if (!bill.getCustomer().equals(inputCustomerName))
+                        {
+                            System.out.println("Customer names do not match! Exiting Program");
+                            System.exit(1);
+                        }
                     }
                 }
                 catch (ParserException p)
                 {
                     System.out.println(p);
                 }
-
             }
+            bill.addPhoneCall(call);
             if (!prettyFile.equals(""))
             {
                 if (prettyFile.equals("-"))
@@ -257,7 +265,16 @@ public class Project3
                     System.out.println("Caller: " + phoneCall.getCaller());
                     System.out.println("Callee: " + phoneCall.getCallee());
                     System.out.println("Start Time: " + phoneCall.getStartTimeString());
-                    System.out.println("End Time: " + phoneCall.getEndTimeString() + "\n");
+                    System.out.println("End Time: " + phoneCall.getEndTimeString());
+                    if (prettyFile.equals("-"))
+                    {
+                        long callDuration = phoneCall.getEndTime().getTime() - phoneCall.getStartTime().getTime();
+                        System.out.println("Call Duration: " + TimeUnit.MILLISECONDS.toMinutes(callDuration) + " minutes\n");
+                    }
+                    else
+                    {
+                        System.out.println("\n");
+                    }
                 }
             }
             if (writeTextFile)
@@ -298,8 +315,8 @@ public class Project3
      */
     static boolean checkIfAmPm(String ampm)
     {
-        String lowerCase = ampm.toLowerCase();
-        return lowerCase.equals("am") || lowerCase.equals("pm");
+        String lowerCase = ampm.toUpperCase();
+        return (lowerCase.equals("AM") || lowerCase.equals("PM"));
     }
 
     /**
